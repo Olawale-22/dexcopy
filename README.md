@@ -60,7 +60,7 @@ Welcome to the Decentralized Copyrights Management System! This DApp allows user
 
 ## 📞 Contact
 
-For any questions or support, please contact us at [support@example.com](mailto:support@example.com).
+For any questions or support, please contact us at [olawalemistersly@gmail.com](mailto:olawalemistersly@gmail.com).
 
 ---
 
