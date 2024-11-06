@@ -5,7 +5,7 @@ import Register from './components/Register';
 import Transfer from './components/Transfer';
 import LoadingSpinner from './components/LoadingSpinner'; // Import the LoadingSpinner component
 import './App.css'; // Import the CSS file
-import logo from './assets/dexcopy.png'
+import logo from './assets/dexcopy.png'; // Import the logo image
 
 function App() {
   const [account, setAccount] = useState('');
@@ -17,6 +17,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false); // Add loading state
   const [showRegister, setShowRegister] = useState(false); // Add state to show/hide register form
+  const [showTransfer, setShowTransfer] = useState(false); // Add state to show/hide transfer form
 
   useEffect(() => {
     async function load() {
@@ -157,6 +158,7 @@ function App() {
   }, [contract, copyrights, account]);
 
   const handleTransferClick = (copyright) => {
+    setShowTransfer(true);
     setSelectedCopyright(copyright);
   };
 
@@ -170,15 +172,17 @@ function App() {
   };
 
   const handleRegisterEnd = () => {
+    setShowRegister(false); // Hide the register form
     setLoading(false); // Hide the loading spinner
   };
 
   const handleTransferStart = () => {
-    setSelectedCopyright(null); // Hide the transfer form
+    setShowTransfer(false); // Hide the transfer form
     setLoading(true); // Show the loading spinner
   };
 
   const handleTransferEnd = () => {
+    setShowTransfer(false); // Hide the transfer form
     setLoading(false); // Hide the loading spinner
   };
 
@@ -191,7 +195,7 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <img src={logo} alt="Logo" className='app-logo'/>
+        <img src={logo} alt="Logo" className="app-logo" />
         <h1>Decentralized Copyrights</h1>
         <p>Account: {account}</p>
         <button className="create-button" onClick={() => setShowRegister(true)}>Create New Copyright</button>
@@ -201,21 +205,16 @@ function App() {
         <div className="popup-overlay">
           <div className="popup-container">
             <Register contract={contract} account={account} onRegisterStart={handleRegisterStart} onRegisterEnd={handleRegisterEnd} /> {/* Pass onRegisterStart and onRegisterEnd to Register */}
-            <button className="close-button" onClick={() => setShowRegister(false)}>Close</button>
           </div>
         </div>
       )}
-      {selectedCopyright && (
+      {selectedCopyright && showTransfer && (
         <div className="popup-overlay">
           <div className="popup-container">
             <Transfer contract={contract} account={account} copyright={selectedCopyright} onTransferStart={handleTransferStart} onTransferEnd={handleTransferEnd} /> {/* Pass onTransferStart and onTransferEnd to Transfer */}
-            <button className="close-button" onClick={() => setSelectedCopyright(null)}>Close</button>
           </div>
         </div>
       )}
-      {/* <div className='account'>
-        <p>Account: {account}</p>
-      </div> */}
       <div className="search-header">
         <h2>All Registered Copyrights</h2>
         <input
@@ -234,7 +233,6 @@ function App() {
             <th>Wallet Address</th>
             <th>Description</th>
             <th>Registration Date</th>
-            {/* <th>Actions</th> */}
           </tr>
         </thead>
         <tbody>
@@ -245,11 +243,6 @@ function App() {
               <td>{copyright.owner ? `${copyright.owner.slice(0, 6)}...${copyright.owner.slice(-4)}` : 'N/A'}</td>
               <td>{copyright.description}</td>
               <td>{copyright.timestamp ? new Date(copyright.timestamp * 1000).toLocaleString() : 'N/A'}</td>
-              {/* <td>
-                {copyright.owner === account && (
-                  <button className="transfer-button" onClick={() => handleTransferClick(copyright)}>Ownership Transfer</button>
-                )}
-              </td> */}
             </tr>
           ))}
         </tbody>

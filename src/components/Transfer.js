@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import '../App.css'; // Import the CSS file for styling
 
-function Transfer({ contract, account, copyright, onTransferStart, onTransferEnd }) {
+function Transfer({ contract, account, onTransferStart, onTransferEnd, copyright }) {
   const [newOwner, setNewOwner] = useState('');
 
   const handleTransfer = async () => {
@@ -19,7 +20,7 @@ function Transfer({ contract, account, copyright, onTransferStart, onTransferEnd
   };
 
   return (
-    <div>
+    <div className="popup-content">
       <h2>Transfer Copyright</h2>
       <p>Transferring copyright: {copyright.name}</p>
       <input
@@ -27,8 +28,12 @@ function Transfer({ contract, account, copyright, onTransferStart, onTransferEnd
         value={newOwner}
         onChange={(e) => setNewOwner(e.target.value)}
         placeholder="Enter new owner's address"
+        className="popup-input"
       />
-      <button onClick={handleTransfer}>Transfer</button>
+      <div className="popup-buttons">
+        <button className="close-button" onClick={onTransferEnd}>Close</button>
+        <button onClick={handleTransfer} className="popup-button">Transfer</button>
+      </div>
     </div>
   );
 }

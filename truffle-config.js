@@ -1,7 +1,7 @@
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const infuraKey = "************"; // Replace with actual Infura project ID
-const mnemonic = "***********************"; // Replace with your actual MetaMask mnemonic phrase
+const infuraKey = "0ce576fbbd254bc98fb3f9e2be0ec301"; // Replace with actual Infura project ID
+const mnemonic = "give marine reopen humor gas mirror impact daring bacon battle insane capital"; // Replace with your actual MetaMask mnemonic phrase
 
 module.exports = {
   networks: {
